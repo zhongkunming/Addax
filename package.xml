@@ -83,6 +83,14 @@
             <outputDirectory>/</outputDirectory>
         </fileSet>
         <fileSet>
+            <directory>plugin/reader/damengreader/target/damengreader-${project.version}/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <fileMode>0644</fileMode>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>plugin/reader/databendreader/target/databendreader-${project.version}/</directory>
             <includes>
                 <include>**/*.*</include>
@@ -358,6 +366,14 @@
         </fileSet>
         <fileSet>
             <directory>plugin/writer/clickhousewriter/target/clickhousewriter-${project.version}/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <fileMode>0644</fileMode>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>plugin/writer/damengwriter/target/damengwriter-${project.version}/</directory>
             <includes>
                 <include>**/*.*</include>
             </includes>

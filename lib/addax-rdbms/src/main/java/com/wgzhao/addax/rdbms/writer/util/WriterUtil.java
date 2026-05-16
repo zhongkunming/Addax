@@ -192,6 +192,10 @@ public final class WriterUtil
                 writeDataSqlTemplate = doOracleOrSqlServerUpdate(writeMode, columnHolders, valueHolders, dataBaseType) +
                         "INSERT (" + columns + ") VALUES ( " + placeHolders + " );";
             }
+            else if (dataBaseType == DataBaseType.Dameng) {
+                writeDataSqlTemplate = doOracleOrSqlServerUpdate(writeMode, columnHolders, valueHolders, dataBaseType) +
+                        "INSERT (" + columns + ") VALUES ( " + placeHolders + " )";
+            }
             else {
                 throw AddaxException.illegalConfigValue(Key.WRITE_MODE, writeMode);
             }
@@ -295,7 +299,7 @@ public final class WriterUtil
         }
 
         // Add FROM clause based on database type
-        if (dataBaseType == DataBaseType.Oracle) {
+        if (dataBaseType == DataBaseType.Oracle || dataBaseType == DataBaseType.Dameng) {
             mergeSql.append(" FROM DUAL");
         }
         mergeSql.append(") TMP ON (").append(joinCondition).append(")");

@@ -604,7 +604,7 @@ public final class DBUtil
     public static void dealWithSessionConfig(Connection conn, Configuration config, DataBaseType databaseType, String message)
     {
         switch (databaseType) {
-            case Oracle, MySql, SQLServer -> {
+            case Oracle, MySql, SQLServer, Dameng -> {
                 List<String> sessionConfig = config.getList(Key.SESSION, new ArrayList<>(), String.class);
                 DBUtil.doDealWithSessionConfig(conn, sessionConfig, message);
             }

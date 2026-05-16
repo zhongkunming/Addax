@@ -400,7 +400,7 @@ public class CommonRdbmsWriter
             this.taskPluginCollector = taskPluginCollector;
             List<String> mergeColumns = new ArrayList<>();
 
-            if ((this.dataBaseType == DataBaseType.Oracle || this.dataBaseType == DataBaseType.SQLServer)
+            if ((this.dataBaseType == DataBaseType.Oracle || this.dataBaseType == DataBaseType.SQLServer || this.dataBaseType == DataBaseType.Dameng)
                     && !"insert".equalsIgnoreCase(this.writeMode)) {
                 LOG.info("write {} using {} mode", this.dataBaseType, this.writeMode);
                 List<String> columnsOne = new ArrayList<>();
@@ -545,7 +545,7 @@ public class CommonRdbmsWriter
                     connection.setAutoCommit(false);
                 }
                 preparedStatement = connection.prepareStatement(writeRecordSql);
-                if ((this.dataBaseType == DataBaseType.Oracle || this.dataBaseType == DataBaseType.SQLServer)
+                if ((this.dataBaseType == DataBaseType.Oracle || this.dataBaseType == DataBaseType.SQLServer || this.dataBaseType == DataBaseType.Dameng)
                         && !"insert".equalsIgnoreCase(writeMode)) {
                     String[] sArray = WriterUtil.getStrings(this.writeMode);
                     Set<String> mergeKeySet = new HashSet<>(java.util.Arrays.asList(sArray));

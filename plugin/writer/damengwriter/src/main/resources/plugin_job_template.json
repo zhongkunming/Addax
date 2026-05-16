@@ -1,0 +1,20 @@
+{
+  "name": "damengwriter",
+  "parameter": {
+    "username": "SYSDBA",
+    "password": "password",
+    "column": [
+      "id",
+      "name"
+    ],
+    "preSql": [
+      "delete from @table"
+    ],
+    "connection": {
+      "jdbcUrl": "jdbc:dm://[HOST_NAME]:PORT/[DATABASE_NAME]",
+      "table": [
+        "test"
+      ]
+    }
+  }
+}

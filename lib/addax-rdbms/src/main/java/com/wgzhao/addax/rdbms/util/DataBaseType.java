@@ -96,7 +96,10 @@ public enum DataBaseType
     Access("access","net.ucanaccess.jdbc.UcanaccessDriver"),
 
     /** SAP HANA in-memory database platform */
-    HANA("hana", "com.sap.db.jdbc.Driver");
+    HANA("hana", "com.sap.db.jdbc.Driver"),
+
+    /** Dameng Database Management System */
+    Dameng("dm", "dm.jdbc.driver.DmDriver");
 
     private static final Pattern jdbcUrlPattern = Pattern.compile("jdbc:[\\w-]+:(?:thin:url=|//|thin:@|)([\\w\\d.,]+).*");
 

@@ -216,7 +216,7 @@ public class GetPrimaryKeyUtil
                          ORDER BY type ASC
                         """.formatted(schemaExpr, tableName);
             }
-            case Oracle -> {
+            case Oracle, Dameng -> {
                 var normalizedSchema = schema == null ? username.toUpperCase() : schema.toUpperCase();
                 // Preserve exact case if quoted, otherwise convert to uppercase
                 var normalizedTableName = tableName.startsWith("\"") ? tableName : tableName.toUpperCase();

@@ -1,0 +1,24 @@
+{
+  "name": "damengreader",
+  "parameter": {
+    "username": "SYSDBA",
+    "password": "password",
+    "column": [
+      "*"
+    ],
+    "splitPk": "",
+    "autoPk": false,
+    "preSql": [],
+    "connection": {
+      "jdbcUrl": "jdbc:dm://127.0.0.1:5236/TEST",
+      "table": [
+        "table"
+      ]
+    },
+    "where": "",
+    "session": [
+      "alter session set NLS_DATE_FORMAT='yyyy-mm-dd hh24:mi:ss'"
+    ],
+    "fetchSize": 2048
+  }
+}
