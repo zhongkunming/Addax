@@ -19,9 +19,10 @@
 
 package com.wgzhao.addax.plugin.writer.mongodbwriter.util;
 
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.wgzhao.addax.core.exception.AddaxException;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 
@@ -35,24 +36,11 @@ import static com.wgzhao.addax.core.spi.ErrorCode.RUNTIME_ERROR;
 public class MongoUtil
 {
 
+    private MongoUtil() {}
+
     public static MongoClient initMongoClient(List<Object> addressList)
     {
-
-        if (addressList == null || addressList.isEmpty()) {
-            throw AddaxException.asAddaxException(ILLEGAL_VALUE, "不合法参数");
-        }
-        try {
-            return new MongoClient(parseServerAddress(addressList));
-        }
-        catch (UnknownHostException e) {
-            throw AddaxException.asAddaxException(ILLEGAL_VALUE, "不合法的地址");
-        }
-        catch (NumberFormatException e) {
-            throw AddaxException.asAddaxException(ILLEGAL_VALUE, "不合法参数");
-        }
-        catch (Exception e) {
-            throw AddaxException.asAddaxException(RUNTIME_ERROR, "未知异常");
-        }
+        return initCredentialMongoClient(addressList, "", "", null);
     }
 
     public static MongoClient initCredentialMongoClient(List<Object> addressList, String userName, String password, String database)
@@ -62,11 +50,24 @@ public class MongoUtil
             throw AddaxException.asAddaxException(ILLEGAL_VALUE, "不合法参数");
         }
         try {
-            MongoCredential credential = MongoCredential.createCredential(userName, database, password.toCharArray());
-            return new MongoClient(parseServerAddress(addressList), credential, new MongoClientOptions.Builder().build());
-        }
-        catch (UnknownHostException e) {
-            throw AddaxException.asAddaxException(ILLEGAL_VALUE, "不合法的地址");
+            MongoCredential credential = null;
+            if (! userName.isEmpty() && ! password.isEmpty()) {
+                credential = MongoCredential.createCredential(userName, database, password.toCharArray());
+            }
+            MongoClientSettings.Builder mongoBuilder = MongoClientSettings.builder()
+                    .applyToClusterSettings(builder -> {
+                        try {
+                            builder.hosts(parseServerAddress(addressList));
+                        }
+                        catch (UnknownHostException e) {
+                            throw AddaxException.asAddaxException(ILLEGAL_VALUE, "不合法的地址");
+                        }
+                    });
+            if (credential != null) {
+                mongoBuilder.credential(credential);
+            }
+            return MongoClients.create(mongoBuilder.build());
+
         }
         catch (NumberFormatException e) {
             throw AddaxException.asAddaxException(ILLEGAL_VALUE, "不合法参数");
